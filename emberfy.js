@@ -972,7 +972,6 @@ function emberfy() {
         }
         var Comp = window[ns][widget_arr.join('') + "Component"];
         var comp = new Comp(undefined, $(this));
-        window.comp = comp;
     });
 }
 
