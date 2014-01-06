@@ -915,7 +915,7 @@ Emberfy.Component = Emberfy.BaseView.extend({
         var bind;
         if(this.attributeBindings) {
             for(i in this.attributeBindings) {
-                bind = this.attributeBindings[i].split(".");
+                bind = this.attributeBindings[i].split(":");
                 if(bind.length == 1) {
                     this.bindAttr(bind[0], this.$el, bind[0]);
                 } else {
@@ -978,8 +978,6 @@ function emberfy() {
         var data = $(this).data(); 
         var widget_arr = data['widget'].split('-');
         for(i in widget_arr) {
-            if(!Object.prototype.hasOwnProperty.call(widget_arr, i))
-                continue;  
             widget_arr[i] = widget_arr[i].charAt(0).toUpperCase() + widget_arr[i].slice(1);
         }
         var Comp = window[ns][widget_arr.join('') + "Component"];
