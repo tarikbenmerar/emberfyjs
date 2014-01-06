@@ -1,9 +1,9 @@
 //TODO: Avoid binding duplications
 //TODO: Action management
 //TODO: A function should be rendered as a function
-//TODO: @each property management
-//TODO: Finish Component
-//TODO: each element
+//TODO: @each property management, observer
+//TODO: each element, and block super class
+
 Emberfy = {
     triggerObservers : function (obj, attr) {
         if(obj.observers && obj.observers[attr]) {
@@ -43,9 +43,6 @@ Emberfy = {
     removeObserver : function (obj, observer) {
       if(obj && obj.observers) {
           for(i in obj.observers) {
-              //TODO: Optimize
-              if(!Object.prototype.hasOwnProperty.call(obj.observers, i))
-                  continue;
               var obs = obj.observers[i];
               if(observer === obs['obj']) {
                   delete obj.observers[i];
@@ -913,14 +910,29 @@ Emberfy.Component = Emberfy.BaseView.extend({
                 this.bindClass(this.$el, this.classNameBindings[i]);
             }    
         }
+
+        //Bind attributes
+        var bind;
+        if(this.attributeBindings) {
+            for(i in this.attributeBindings) {
+                bind = this.attributeBindings[i].split(".");
+                if(bind.length == 1) {
+                    this.bindAttr(bind[0], this.$el, bind[0]);
+                } else {
+                    this.bindAttr(bind[0], this.$el, bind[1]);
+                }
+            }
+        }
     }
 });
 
+
+//Create a new Computed Property
 Emberfy.computed = function (computed) {
     return new Emberfy.ComputedProperty(computed);
 }
 
-
+//Computed Property Class
 Emberfy.ComputedProperty = Emberfy.BaseObject.extend({
 
     init : function (computed) {
