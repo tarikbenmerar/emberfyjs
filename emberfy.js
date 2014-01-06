@@ -479,6 +479,9 @@ Emberfy.BaseView = Emberfy.BaseObject.extend({
         this.view_endpoints[attr].push(view);
         this.html_endpoints[attr].push($el);
 
+        //Build the property chain
+        this.buildPropChain(attr);
+
         return view;
     },
 
@@ -528,10 +531,9 @@ Emberfy.BaseView = Emberfy.BaseObject.extend({
             property_root = property_chain.join(".");
             view_endpoints = this.view_endpoints[property_root];
             if(view_endpoints) {
-                this.resetEndPoints(property_root);
-                /*for(i in view_endpoints) {
+                for(i in view_endpoints) {
                     view_endpoints[i].rebuildPropChain(reverse_chain);
-                }*/
+                }
             }
             reverse_chain = property_chain.pop() + "." + reverse_chain;
         }
@@ -858,11 +860,7 @@ Emberfy.BaseView = Emberfy.BaseObject.extend({
     }
 });
 
-Emberfy.EachBlock = Emberfy.BaseView.extend({
-    
-});
-
-Emberfy.WithBlock = Emberfy.BaseView.extend({
+Emberfy.BaseBlock = Emberfy.BaseView.extend({
     init : function(parent, $el, parent_ns) {
 
         //Set the parent namespace
@@ -885,7 +883,15 @@ Emberfy.WithBlock = Emberfy.BaseView.extend({
     }
 });
 
-Emberfy.EachEltBlock = Emberfy.BaseView.extend({
+Emberfy.EachBlock = Emberfy.BaseBlock.extend({
+    
+});
+
+Emberfy.WithBlock = Emberfy.BaseBlock.extend({
+
+});
+
+Emberfy.EachEltBlock = Emberfy.BaseBlock.extend({
 });
 
 Emberfy.Component = Emberfy.BaseView.extend({
