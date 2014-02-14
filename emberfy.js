@@ -2,7 +2,7 @@
 //TODO: Action management
 //TODO: A function should be rendered as a function
 //TODO: @each property management, observer
-//TODO: each element, and block super class
+//TODO: each element
 
 Emberfy = {
     triggerObservers : function (obj, attr) {
@@ -956,7 +956,7 @@ Emberfy.ComputedProperty = Emberfy.BaseObject.extend({
         return this;
     },
 
-    setContext : function (context) {
+    setContext : function ( context ) {
         this.context = context;
     },
 
@@ -967,14 +967,20 @@ Emberfy.ComputedProperty = Emberfy.BaseObject.extend({
 });
 
 //Export some classes to Ember namespace
-Ember = {
-    fake : true,
-    get : Emberfy.get,
-    set : Emberfy.set,
-    Component : Emberfy.Component,
-    A : Emberfy.A,
-    computed : Emberfy.computed
+Emberfy.exportToEmber = function () {
+    
+    window.Ember = {
+        fake : true,
+        get : Emberfy.get,
+        set : Emberfy.set,
+        Component : Emberfy.Component,
+        A : Emberfy.A,
+        computed : Emberfy.computed
+    }    
 }
+
+
+
 
 //Emberfication des widgets
 function emberfy() {
@@ -991,7 +997,16 @@ function emberfy() {
     });
 }
 
-//Lancer l'emberfication
-$(function () {
-    emberfy();
-});
+Emberfy.start = function ( ns ) {
+    var widgets = $('*[data-widget]');
+    widgets.each(function (index) {
+        var data = $(this).data(); 
+        var widget_arr = data['widget'].split('-');
+        for(i in widget_arr) {
+            widget_arr[i] = widget_arr[i].charAt(0).toUpperCase() + 
+                            widget_arr[i].slice(1);
+        }
+        var Comp = window[ns][widget_arr.join('') + "Component"];
+        var comp = new Comp(undefined, $(this));
+    });
+}
