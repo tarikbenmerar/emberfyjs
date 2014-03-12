@@ -891,9 +891,12 @@ Emberfy.WithBlock = Emberfy.BaseBlock.extend({
 
 });
 
+//
 Emberfy.EachEltBlock = Emberfy.BaseBlock.extend({
 });
 
+
+//
 Emberfy.Component = Emberfy.BaseView.extend({
     init : function(parent, $el, data) {
         //Call the super constructor
@@ -941,12 +944,14 @@ Emberfy.computed = function (computed) {
 //Computed Property Class
 Emberfy.ComputedProperty = Emberfy.BaseObject.extend({
 
+    //Initialize the computed property
     init : function (computed) {
         Emberfy.BaseObject.prototype.init.call(this);
         this.computed = computed;
         this.properties = [];
     },
 
+    //Set the properties of the computed property
     property : function () {
         this.properties = [];
         var i = arguments.length;
@@ -956,10 +961,12 @@ Emberfy.ComputedProperty = Emberfy.BaseObject.extend({
         return this;
     },
 
+    //Set the context of the computed property
     setContext : function ( context ) {
         this.context = context;
     },
 
+    //Call the computed property
     callComputed : function () {
         return this.computed.call(this.context);
     }
