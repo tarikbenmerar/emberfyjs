@@ -5,7 +5,7 @@
 //TODO: each element
 
 Emberfy = {
-    triggerObservers : function (obj, attr) {
+    triggerObservers: function (obj, attr) {
         if(obj.observers && obj.observers[attr]) {
             var attr_observers = obj.observers[attr];
             for(i in attr_observers) {
@@ -20,22 +20,24 @@ Emberfy = {
         }
     },
 
-    addObserver : function ( obj, obs, attr_obj, attr_obs, attr_obj_ref ) {
+    addObserver: function ( obj, obs, attr_obj, attr_obs, attr_obj_ref ) {
  
         if(typeof obj == "number" || typeof obj == "string" || obj == undefined || 
            typeof obs == "number" || typeof obs == "string" || obs == undefined)
             return;
 
-        if(!obj.observers)
+        if(!obj.observers) {
             obj.observers = {};
+        }
 
         if(!obj.observers[attr_obj])
             obj.observers[attr_obj] = [];
-        obj.observers[attr_obj].push([obs, attr_obs, attr_obj_ref]);
+        obj.observers[ attr_obj ].push([obs, attr_obs, attr_obj_ref]);
 
         //TODO: Solve duplications
-        if(!obs.observing)
+        if(!obs.observing) {
             obs.observing = [];
+        }
         obs.observing.push(obj);
     },
 
@@ -51,7 +53,7 @@ Emberfy = {
       }
     },
 
-    stopObserving : function (obj) {
+    stopObserving: function (obj) {
          if(obj.observing) {
              for(i in obj.observing) {
                  if(!Object.prototype.hasOwnProperty.call(obj.observering, i))
