@@ -6,9 +6,17 @@
 </head>
 <body>
   <div id="mocha"></div>
-  <script src="chai.js"></script>
-  <script src="mocha.js"></script>
-  <script>mocha.setup('bdd')</script>
+  <script type="text/javascript" src="./../emberfy.js">
+  </script>
+  <script type="text/javascript" src="chai.js">
+  </script>
+  <script type="text/javascript" src="mocha.js">
+  </script>
+  <script type="text/javascript">
+    mocha.setup( 'bdd' );
+  </script>
+  <script type="text/javascript" src="core.tests.js">
+  </script>
   <script>
     //mocha.checkLeaks();
     //mocha.globals(['jQuery']);
