@@ -16,7 +16,9 @@ describe( 'Code Tests', function () {
 
 			Emberfy.addObserver( obj, obj1, attr_obj, attr_obs, attr_obj_ref );
 			it( 'The observed object should contain the observers attribute filled appropriately', function () {
-				expect( obj ).to.contain.keys( 'observers' );	
+				expect( obj ).to.contain.key( 'observers' );
+				expect( obj.observers ).to.contain.key( attr_obj );
+				expect( obj.observers[ attr_obj ] ).to.deep.equal([ [ obj1, attr_obs, attr_obj_ref ] ]);	
 			});
 
 		});
